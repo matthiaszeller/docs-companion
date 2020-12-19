@@ -10,11 +10,13 @@ overleaf-github bridge, in order to **centralize and backup** latex templates.
 
 ## Example templates
 
-Cheatsheets:
+#### Cheatsheets
 
+<img src="res/signals-systems-example.jpg" width="300" />&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/artificial-intelligence-example.jpg" width="300" />
 
-<img src="res/signals-systems-example.jpg" />
+#### Summaries
 
+<img src="res/computer-security-example.jpg" width="300" />
 
 ## Project structure
 
