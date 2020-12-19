@@ -8,3 +8,35 @@
 Until now, overleaf projects accumulated without well-defined structure. This new feature gave me the idea to create an 
 overleaf-github bridge, in order to **centralize and backup** latex templates. 
 
+## Project structure
+
+### Description
+
+* Directory tree level 1 (i.e. root) : 
+  * Name of template categories (e.g. cheatsheets)
+  * Git README.md
+  * main.tex
+* Directory tree level 2  : 
+  * specific example projects / templates 
+
+### Treeview of template structure
+
+```
+.
+├── cheatsheets
+│   ├── proj-cheatsheet-1
+│   │   ├── foo.tex
+│   │   ├── main.tex
+│   │   ├── README.txt
+│   ├── proj-cheatsheet-2
+│   │   ├── main.tex
+│   │   └── ...
+│   └── ...
+├── main.tex
+├── overleaf-original
+│   ├── project-1.zip
+│   └── ...
+└── summaries
+    └── topic1
+        └── ...
+```
