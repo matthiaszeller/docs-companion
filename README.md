@@ -8,6 +8,14 @@
 Until now, overleaf projects accumulated without well-defined structure. This new feature gave me the idea to create an 
 overleaf-github bridge, in order to **centralize and backup** latex templates. 
 
+## Example templates
+
+Cheatsheets:
+
+
+<img src="res/signals-systems-example.jpg" />
+
+
 ## Project structure
 
 
