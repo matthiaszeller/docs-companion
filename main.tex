@@ -1,14 +1,37 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 
-\title{Overleaf companion}
-\author{m.zeller1901 }
+\title{Overleaf companion - GitHub bridge}
+\author{m.zeller1901@gmail.com}
 \date{December 2020}
+
+
+% Embed markdown files in the latex file
+\usepackage{markdown}
 
 \begin{document}
 
 \maketitle
 
-\section{Introduction}
+
+\section{Setup}
+
+
+\subsection{Link with \texttt{README.md} file}
+
+% Latex Code Listing doc: https://www.overleaf.com/learn/latex/code_listing
+\begin{verbatim}
+    % MWE to embed markdown file in the latex file
+    \documentclass{article}
+    \usepackage{markdown}
+    \begin{document}
+    \markdownInput{example.md}
+    \end{document}
+\end{verbatim}
+
+
+\markdownInput{README.md}
+
+
 
 \end{document}
