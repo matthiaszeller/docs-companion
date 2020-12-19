@@ -1,0 +1,111 @@
+\section*{Diagnostic par abduction}
+
+Tâche abductive, 3 techniques (explicite, transfo déduc, incertain)
+
+Input = observation dysfonctionnement
+
+Input suppl: interactivité
+
+Output = actions pour corriger défaut
+
+\textbf{(+)} : version forte 
+
+\textbf{(-)} : modéliser défaillances, parfois difficile, bcp possibilités
+
+\subsection*{Formalisation}
+
+Etant donnée modèle du système $MS$, ensemble observations $OBS$, trouver candidats $CAND$ de composants défectueux. 
+
+Failure $\Rightarrow MS \cup OBS \vdash \bot$
+
+Version forte (diagnostic par abduction) : $MS \cup CAND \vdash OBS$
+
+Version faible (diagnostic par consistance) : $(MS - CAND) \cup OBS \rightarrow$ pas de contrad
+
+\subsection*{Abduction explicite}
+
+Mécanisme : boucle générateur hypothèse -> préd. par modèle -> evaluation -> ...
+
+Hypothèse monde clos appliquée au moment éxécution recherche
+
+\textbf{Abduction par recherche} : noeud  = ensemble défauts, noeud init = ensemble vide, succ = ajouter défaut, noeud fin = défauts expliquent observ ; BFS trouve diag le (+) simple ; A* heuristique dur à trouver ; très couteux
+
+
+\subsection*{Transformation en déduction}
+
+Hyp monde clos : modèle ne change pas, dysfonctions toutes connues
+
+Systèmes pré-compilés, voitures, avions
+
+\textbf{Etape 1} : simuler comportement de tous les défauts ; tableau de toutes les combinaisons (0/1) $\leftrightarrow$ observations 
+
+\textbf{Etape 2} : Construire règles pour déduire diag à partir des obs ; en renversant tableau 
+
+\textbf{Problèmes} : pas toujours possible, si diff combinaisons donnent mêmes obs. $\rightarrow$ conclusion disjonctive (règle n'est pas clause Horn) ; tout changement demande recompilation ; cas non prévus
+
+
+\subsection*{Raisonnement incertain}
+
+Limitation: complexité du graphe
+
+Défaillance $B$ cause plusieurs effets observables $A, C$ : $A \leftarrow B \rightarrow C$, on infère $p(B)$ en observant $A, C$. Voir formule raisonnement incertain, cause $X$ à $k$ conséquences.
+
+\textbf{Naive Bayes} : naive = pour graphes causaux seulement, $\forall \: o \in OBS$ on modélise comportement par $p(o|c)$, on trie les candidats $c_i$ par $\prod_{o\in OBS} p(o|c_i)$ car $\alpha = 1/p(o_1,\dots,o_n)$ et $p(c)$ const %\textbf{??????????????????}
+
+
+
+\section*{Diagnostic par consistance}
+
+Idée: rendre observations consistantes en supprimant les éléments défectueux du modèle
+
+\textbf{(+)} pas besoin de prédire les observations 
+
+\textbf{(-)} version faible 
+
+
+\subsection*{Conflits et candidats}
+
+\textbf{Symptôme} = toute différence entre prévision et mesure ou deux prévisions
+
+\textbf{Justification prévision} = ensemble d'éléments impliqués dans la prévision
+
+\textbf{Conflit} = ensemble d'éléments dont au moins 1 est défectueux $\{E_1,\dots,E_n\}$
+
+\textbf{Candidats} = toutes les combinaisons possibles $C_i$ (de $1$ à $n$ éléments) d'un conflit, $\mathcal{C} = \{C_1,C_2,C_3,\dots\} = \{\{E_1\},\{E_2\},\{E_1,E_2\},\dots\}$
+
+\textbf{Candidats minimaux} = seulement les $C_i$ t.q. $\nexists \tilde C_i \subset C_i$ t.q. $\tilde C_i \subset \mathcal{C}$. Idée: composants tombent rarement en panne simult. $\rightarrow$ réduit complexité 
+
+
+\subsection*{Intégration de conflits}
+
+Découverte de conflits en prenant des mesures. 
+
+Intégration: $\forall \: CAND$ et composant $c \in $ nouveau conflit, générer $C' = CAND \: \cup \: \{c\}$ (combinaisons). But = congenir au moins 1 élem. de chaque conflit.
+
+Puis filtrer $C'$ pour garder candidats minimaux
+
+Chaque symptome tend à augmenter \# candidats minimaux, mais \# candidats à peu de composants diminue rapidement $\rightarrow$ convergence du diagnostic
+
+\subsection*{Evaluation des candidats}
+
+On veut comparer les candidats
+
+Proba de défaillance composant généralement connue
+
+Hypothèse: indépendance des défaillances $\rightarrow$ probabilité candidat $C = \{D = \text{comp defect}\} \cup \{N = \text{comp non defect}\}$, $P(C) = \prod_{c\in D}P(C) \prod_{c\in N} (1-P(c))$
+
+
+\subsection*{Proposition de mesures}
+
+Faire progresser diagnostic le (+) rapidement possible
+
+\textbf{Entropie des mesures} : incertitude quant à valeurs mesurées, 
+
+$E(X) = - \sum_k p(X=x_k) \log{(p(X=x_k))}$
+
+on sélectionne la mesure $X$ ayant entropie maximale
+
+\textbf{Probabilité valeurs} : proba de mesurer valeur $k$ pour variable $X_i$ : $p(X_i = x_{ik}) = \sum_{c\in P_{ik}} p(c) + \sum_{c\in U_i} p(c)/m$, $P_{ik}$ ensemble candidats prédisant $X_i=x_{ik}$, $U_i$ regroupant candidats qui donnent aucune valeur pour mesure $i$ et leur donne proba $1/m$, $m$ = nb valeurs possible pour $X_i$
+
+
+\textbf{Probabilités candidats} : On normalise pour que $\sum_{CAND} p(CAND) = 1$, car on assume que $\exists$ au moins 1 défaillance

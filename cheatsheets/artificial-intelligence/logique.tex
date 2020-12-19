@@ -1,0 +1,64 @@
+\section*{Logique}
+
+\subsection*{Définitions}
+
+% slide 39 intro
+
+%\textbf{Symbole} = objets, paramètres (ex $\text{Jacques, 3.52}$
+
+%\textbf{Prédicat} = propriétés, relations (ex $\text{grand(Jacques), valeur(vitesse, 3.52)}$)
+
+%\textbf{Propositions} = expressions logiques, assertion avec valeur de vérité (vrai/faux)
+
+%\textbf{Prop. simple} = prédicats sans var. libre
+
+%\textbf{Prop. composée} = combin. prédicats et connecteurs
+
+\textbf{Connecteurs} : et ($\land$), ou ($\lor$), non ($\lnot$), implique ($a \Rightarrow b$, équiv. $\lnot a \lor b$)
+
+%\textbf{Atome} ?????????????
+
+%\textbf{Littéral} atome ou sa négation
+
+%\textbf{Clauses disjonctive} : $l_1 \lor \dots \lor l_n $ ou conjonctive $l_1 \land \dots \land l_n $ (par défaut si non précisé), $l_i$ des littéraux
+
+\textbf{Forme normale conjonctive}
+Conjonction $\{P\} = a_1 \land a_2 \land \dots$ de clauses disjonctives $a_i = l_1 \lor l_2 \lor \dots$
+
+\textbf{Clause de Horn} disjonction de littéraux avec au plus 1 littéral positif:\\
+$\lnot cond_1 \lor \dots \lor \lnot cond_n \lor consequence$\\
+s'écrit intuivitement par conjonction de conditions avec max 1 conclusion:\\
+$cond_1 \land \dots \land cond_n \Rightarrow consequence$. 
+
+Traduction:
+
+$A\lor B \Rightarrow C \rightarrow A \Rightarrow C, B \Rightarrow C$ \\
+$A \Rightarrow B \land C \rightarrow A \Rightarrow B, A \Rightarrow C$ \\
+$A \Rightarrow B \lor C$ pas traduisible
+
+\subsection*{Règles d'inférence}
+
+Règles équivalence (plus bas), et : modus ponens, introduction et, élimination et.
+
+%Résolution :\\
+%$p_1 : a_1 \lor \dots \lor a_n \lor X$ \\
+%$p_2 : b_1 \lor \dots \lor b_m \lor \lnot X$ \\
+%$q: a_1 \lor \dots \lor a_n \lor b_1 \lor \dots \lor b_m$
+
+\textbf{Résolution}: $a\lor \lnot X$, $b\lor X \rightarrow a\lor b$
+
+\subsection*{Règles équivalence}
+
+Lois Morgan : $\lnot (X_1 \land X_2) \Leftrightarrow \lnot X_1 \lor \lnot X_2$, $\lnot (X_1 \lor X_2) \Leftrightarrow \lnot X_1 \land \lnot X_2$
+
+Distributivité : \\
+$X_1 \land (X_2 \lor X_3) \Leftrightarrow (X_1 \land X_2) \lor (X_1 \land X_3)$ \\
+$X_1 \lor (X_2 \land X_3) \Leftrightarrow (X_1 \lor X_2) \land (X_1 \lor X_3)$
+
+Commutativité, associativité
+
+Contraposée: $X_1 \Rightarrow X_2 \Leftrightarrow \lnot X_2 \Rightarrow \lnot X_1$
+
+\subsection*{Equivalence expressions quantifiées}
+
+METTRE ?? 02 slide 30

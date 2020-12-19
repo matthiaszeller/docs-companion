@@ -1,0 +1,68 @@
+
+\section*{Incertitude}
+
+Introduit à cause : incertitude modèle, clauses Horn impossibles, modèle incomplet.
+
+\subsection*{Logique floue}
+
+Facile, peu fondé théoriquement.
+
+\textbf{Facteur certitude} : hybride logique floue et probas, $\text{CF} \in [-1; 1]$ (0.0 = inconnu) associé à chaque fait et règle
+
+Propagation CF: application règle, maillon faible: $CF(\text{concl}) = CF(\text{regle}) * \max{(0, \min{(\text{conds})})}$
+
+Combinaison CF: 2 chemins mènent à mm prop., combin. parallèle (hyp: indép) : 
+$CF_{comb}(x,y) = 
+\begin{cases}
+x + y - xy & x, y \geq 0 \\
+x + y + xy & x, y < 0 \\
+\frac{x+y}{1-\min{(|x|, |y|)}} & \text{sinon}
+\end{cases}$
+
+\subsection*{Logique probabliste}
+
+Théorie solide, non viable en pratique.
+
+Proposition = var aléatoire $\in \{V, F\}$. Notation: $p(A)$ proba, $P(A)$ distrib de $p(A)$
+
+Interpret: frequentiste :  proba = fréq, raisonnement 1 seule fois ; Bayésien : proba = plausibilité, change avec nv observ. 
+
+
+\subsection*{Inférence probabiliste}
+Avec $p(A)$, règle $A \Rightarrow B$, \\
+$p(B) = p(B|A)p(A) + p(B|\lnot A) p(\lnot A)$ \\
+$p(A)$ certitude condition, $p(B|A)$ certitude règle, $p(B|\lnot A)$ contre-factuel 
+
+Complexité: $P(X|V_1, \dots, V_k)$ dépend de $2^k$ valeurs
+
+Loi probas tot.: $P(A) = \sum_n P(A|B_n)P(B_n)$
+
+\subsection*{Réseaux Bayésiens}
+
+Causalité: permet propag. locale des probas, $A \rightarrow B \rightarrow C$ ok, $A \rightarrow B \leftarrow C$ pas ok ($B$ noeud bloquant) ; implique ordre des vars ; formalisé par graphe d'influences causales
+
+
+\textbf{Indépendance conditionnelle} de $A, C$ donné $B$ pour $A \rightarrow B \rightarrow C$, on peut marginaliser $B$ : \\
+$p(C|A, B) = p(C|\lnot A, B) = p(C|B)$, donc \\
+$p(C|A) = p(C|B)p(B|A) + p(C|\lnot B)p(\lnot B|A)$
+
+\textbf{Descendants mult.} : pour $A \leftarrow B \rightarrow C$:\\ 
+$P(A|B, C) = P(A|B)$
+
+\textbf{Causes multiples} : pour $A \rightarrow B \leftarrow C$, $A, B$ indép, mais dép si $B$ connu, on doit connaitre $p(B|A,C)$
+
+\textbf{Chemins multiples} : complexité exp $\rightarrow$ résolution stochastique, inférence exacte sv impossible
+
+
+\subsection*{Inférence abductive}
+
+Bayes: chaine causale $A \rightarrow B \rightarrow C$, abduction: $p(A|B) = p(B|A)p(A) / p(B)$
+
+$p(B|A)$ likelihood de $B$, $p(A)$ prob à priori, $p(B)$ sv inconnu
+
+Obtenir $p(B)$: poser $\alpha = 1/p(B)$, obtenir $\alpha$ par normalisation: $p(A|B) + p(\lnot A |B) = 1$
+
+\textbf{Chainage abduction}: $A \rightarrow B \rightarrow C$, $p(A|C) = \frac{p(A)}{p(C)} \sum_{b=B,\lnot B} p(b|A)p(C|b)$, $\alpha=1/p(C)$ par normalisation
+
+\textbf{Cause $X$ à $k$ conséq.}: $\alpha = 1/p(Y_1,\dots,Y_k)$ $p(X|Y_1,\dots, Y_k) = \alpha p(X) \prod_{i=1}^k p(Y_i|X)$
+

@@ -1,0 +1,61 @@
+\section*{Satisfaction de contraintes (PSC)}
+
+Idée: cadre restreint de recherche pour meilleure efficacité, (-) temps calcul imprévisible
+
+Formulation: étant donné variables $X = \{x_1, \dots, x_n\}$, leur domaines $D_1, \dots, D_n$, les contraintes $C = \{c_1(x_k, x_l, \dots), c_2, \dots, c_m\}$ ; trouver les solutions $\{x_1=v_k, \dots, x_n = v_o\}$ satisfaisant toutes les contraintes
+
+Cadre cours: vars discrètes, $D_i$ fini
+
+Exemple: alloc. ressources, variables = taches, domaine = ressources d'une tâche, contraintes = 1 seule ressource utilisée à la foie (temporel)
+
+\textbf{Graphe de contraintes} : pour contraintes binaires, noeuds = vars, arcs = contraintes
+
+\textbf{Contraintes non-binaires} : transfo
+
+\textbf{Generate-and-test}: le + simple, gen all combinations, mais complexité $|D|^{|X|}$
+
+
+\subsection*{PSC par recherche}
+
+Noeud = instance $\{x_1 = v_1, \dots, x_k = v_k\}$ \\
+Succ = $x_{k+1}=v_{k+1}$ respecte contraintes \\
+Noeud init = instanciation vide \\
+Noeud but = tt vars assignées
+
+
+\subsection*{Algorithmes systématiques}
+
+Algo backbone: DFS, exploite caractère local PSC, résolution par recherche
+
+\textbf{Backtracking} : abandonne sol partielle inconsistante (1 step back)
+
+\textbf{Backjumping} : si assignation $x_{k+1}$ échoue, revenir à dernière var qui partage contrainte avec $x_{k+1}$
+
+\textbf{Forward checking} : labels $\{l_1,\dots,l_n\}$, élim les $l_j$ des vars $i>k$ qui sont inconsistantes, backtrack quand labels vides
+
+\textbf{Lookahead} : comme forward check mais entre tt paire de vars non instanciées
+
+\textbf{Variable ordering} : modif ordre assignation, dynamic variable ordering (+ petit label), min-width ordering (var ayant contraintes avec le - de vars diff), max-degree ordering (var la + connectée du PSC original)
+
+\textbf{Comparaison} : backjumping pas ouf, forward checking/lookahead mieux, forward check + DVO très bien (plus de backtrack requis) 
+
+
+\subsection*{Consistance (locale)}
+
+Idée: temps calcul prévisible en restreignant encore + problème, solution en 2 temps (élimine valeurs puis recherche)
+
+\textbf{Consistance des arcs} : pour contrainte $C(x_1,x_2)$ liant vars $x_1,x_2$, valeur $v_1 \in l_1$ peut être sol seulement si $\exists v_2 \in l_2$ t.q. $C(v_1,v_2)$ ; consiste à supprimer tous les $l_1, l_2$ ne respectant pas la contrainte
+
+\textbf{Step 1 - Propagation locale - Algo Waltz} : application itérative de fonction reviser $\forall$ comb de vars $x_i, x_j$ until labels can't be reduced anymore, arc consistency guaranteed, \textbf{!!! Bidirectionnel}, réviser $C_{ij}$ puis $C_{ji}$ ; complexité $\mathcal{O}(n d e)$, $e$ contraintes, $n$ vars, domaine taille max $d$
+
+\textbf{Step 2 - Recherche} : si réseau = arbre, sol trouvée sans backtracks (tous les labels restants sont compatibles) ; si cycles, consistance arcs bcp (-) utile 
+
+
+
+\subsection*{Recherche locale - Méthodes itératives}
+
+Idée: \textbf{Hill climbing}, assignation initiale, chercher modifications locales réduisant nombre contraintes violées (= augmenter \# contraintes satisf continuellement) ; 2 versions (probabiliste et déterministe)
+
+\textbf{Méthode déterministes - Min conflicts} : réassigner variable qui réduira le plus \# conflits (descente gradient) ; minimas locaux, très aléatoire et imprévisible (assignations initiales)
+
+\textbf{Méthodes probabilistes - Recuit simulé} : parfois faire des changements non optimaux, inspiré de physique : solidification des verres

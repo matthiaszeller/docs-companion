@@ -1,0 +1,28 @@
+\section{Basics}
+
+\textbf{Série géométrique} $\sum_{n=0}^{N-1} q^n = \frac{1-q^N}{1-q} \quad q \neq 1$ 
+
+\textbf{Identités trigo} : $\cos(\theta + \sfrac{\pi}{2}) = -\sin\theta$, $\sin(\theta + \sfrac{\pi}{2}) = cos\theta$
+
+\textbf{Excitation sinusoidale discrète} : $e_{\omega_0}[n] = e^{j\omega_0 n} = \cos\omega_0n + j \sin\omega_0n, \:\omega_0\in[-\pi,\pi[$. Fonctions propres des systèmes LID: $S_h\{e_{\omega_0}\}[n] = |H(e^{j\omega_0})| e^{j(\omega_0n + \operatorname{Arg}(H(e^{j\omega_0n}))}$
+
+\textbf{Périodisation} : $f[n]$ support fini, sa version $N$-périodisée : $f_N[n] = \sum_m f[n+mN]$
+
+\textbf{Nombres complexes} : \\
+\begin{myitemize}
+\item 
+$
+    \operatorname{Arg}(x + iy) =
+\begin{cases}
+  \arctan\left(\sfrac y x\right)       &\text{if } x > 0, \\
+  \arctan\left(\sfrac y x\right) + \pi &\text{if } x < 0 \text{ and } y \ge 0, \\
+  \arctan\left(\sfrac y x\right) - \pi &\text{if } x < 0 \text{ and } y < 0, \\
+  +\sfrac{\pi}{2}   &\text{if } x = 0 \text{ and } y > 0, \\
+  -\sfrac{\pi}{2}   &\text{if } x = 0 \text{ and } y < 0, \\
+  \text{undefined} &\text{if } x = 0 \text{ and } y = 0.
+\end{cases}
+$
+
+\item $\log z = \log |z| + j\theta$
+
+\end{myitemize}

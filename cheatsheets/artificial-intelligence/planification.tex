@@ -1,0 +1,76 @@
+\section*{Planification}
+
+\subsection*{Formalisation}
+
+\textbf{Opérateur} = action abstraite non instanciée
+; \textbf{Action} = instanciation opérateur
+; \textbf{Etat initial} sv complèt. connu
+; \textbf{Etat final} = conditions devant être satisfaites, bcp d'inconnus
+; \textbf{But} = trouver séquence d'actions t.q. état init->final
+; \textbf{Éléments généraux} : modélisation monde, algo recherche, traiter inférence entre plusieurs buts
+
+\subsection*{Modélisation}
+
+\textbf{Modèle d'un état} : conjonction d'expressions vraies
+
+\textbf{Monde évolue} d'un état à l'autre, modéliser temps
+
+Toute autre proposition est supposée fausse
+
+\subsection*{Calcul de situations}
+
+Problème: les états décrivent éléments superflus, pb complexité 
+
+\textbf{Situation} = comme état mais pas toutes les propositions vraies incluses, les propositions non mentionnées peuvent être V/F (!= états)
+
+\textbf{Calcul de situation} = transformation des situations par opérateurs
+
+\textbf{Action} = transformation état$_i \rightarrow$ état$_{i+1}$
+; \textbf{Plan} = séquence actions
+; \textbf{Opérateur} = action au les situations, $S_{i+1} = f(S_i)$
+; \textbf{Complexité} : l'ensemble des situations doit être fini
+
+%TODO: STRIPS plutot spécifique à planification linéaire
+\textbf{Opérateurs STRIPS} = préconditions (sur $S_i$), postconditions ajoutée dans $S_{i+1}$, suppressions 
+
+\textbf{Axiome de cadre} = toute proposition non mentionnée reste valable 
+
+
+
+\subsection*{Planification linéaire - chainage arrière}
+
+\textbf{Chainage arrière} à partir du but, arbre de recherche. 
+
+Pbs: variables pas tt connues pour instancier opérateur, situations inconsistantes (à éliminer), explosion combinatoire 
+
+\textbf{Recherche A*} : noeud = situation, succ(n) = opérateurs inverses, cout chemin = somme cout opérateurs
+
+\textbf{Espace recherche} : temps implicite dans génération arbre
+
+
+\subsection*{Planification non linéaire}
+
+Trouver d'abord sous-plan pour chaque but puis ensuite l'ordre qui convient. 
+
+1 plan non-linéaire peut représenter bcp de plans linéaires différents
+
+Ordonner les actions comme séquences d'actions parallèles
+
+
+\subsection*{Planification non linéaire - Contraintes}
+
+Utilise planif. non linéaire et solver de PSC efficaces pour variables binaires
+
+Fixer \# actions parallèle $l$ (étapes), incrémenter si no solution
+
+\textbf{Variable} : $\forall$ action possible et étape $S_i, i \in \{1,\dots,l\}$, introduire var bool (V = action appliquée à étape $i$)
+
+Plan = assignation de tt les vars
+
+\textbf{Variable d'état} : $\forall$ proposition de formulation STRIPS et étape $i$, variable booléenne => permet formuler contraintes entre actions
+
+\textbf{Contraintes} : pour les pré- et post-conditions de chaque opérateur, pour le but et conditions initiales (contraintes sur variables d'état), pour axiome cadre (reformulé: si var. change, $\exists$ action l'ayant en postcondition), pour exclusions mutuelles (mutex)
+
+\textbf{Temps} : contraintes de temps (précédence, et 1 seule ressource utilisé en mm temps)
+
+\textbf{Types} = planif heuristique, hiérarchique 

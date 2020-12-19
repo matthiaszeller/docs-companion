@@ -1,0 +1,127 @@
+\section*{Apprentissage supervisé}
+
+= induction d'un modèle (ex. une règle)
+
+Valide sous hyp. monde clos (tous les exemples possibles sont considérés) $\rightarrow$ BigData, the more data the less likely the hypothesis is false
+
+%Supervisé = exemples classifiés
+
+\textbf{Problème} : recherche combinatoire pour trouver les bonnes combinaisons de prédicteurs
+
+\textbf{But} = classification, régression (+ renforcement, ...)
+
+
+\section*{Apprentissage modèles paramétriques}
+
+= fonction paramétrisée par des attributs, 3 manières:
+
+\textbf{Types} : données discrètes $\rightarrow$ conjonction attributs (sv pas possible), numériques $\rightarrow$ frontière décision, régression
+
+\subsection*{Frontière de décision (attrib. numériques)}
+
+\textbf{Frontière linéaire} : $\delta(W,X) = XW$, $x_0=1$, modèle paramétrisé par poids $W$
+
+\textbf{Décision} = fonction seuil $C(X) = 1$ si $\delta(W,X)>0$, 0 sinon
+
+\textbf{Perceptron} = modèle simplifié neurones, utilise $\delta, C$
+
+\textbf{Apprentissage} = stochastic gradient descent, le gradient $\delta(WX)/\delta(W) \propto X$
+
+
+\subsection*{Support vector machines}
+
+Trouver séparation optimale = maximiser séparation entre exemples
+
+Maximal margin classifier: marge $\detla_0$, maximiser $\delta_0$ = minimiser $|W|^2$ sous contrainte$XW=1$, samples (+) sont $XW>1$, (-) $XW<-1$
+
+Non séparabilité: accepter erreurs ou transfos (kernels)
+
+Kernels: permet omission transfo explicite, minimiser $\phi(W)\phi(W)$ sous contraintes $\phi(X_i)\phi(W)>1$ ou $<-1$, on remplace $\phi(X)\phi(Y)$ par $K(X,Y)$
+
+\subsection*{Régression}
+
+$y=WX + \mathcal{L}$, chercher $W$ qui maximise $p(W|X)$
+
+Si tous les $W$ équiprobables = maximum likelihood, équiv. à maximiser $p(X|W)$
+
+Si erreurs distrib. normale, max likelihood = approx moindres carrés
+
+\textbf{Biais} = capacité modèle à représenter réalité
+
+\textbf{Variance} = erreur à cause courbe déterminée par erreurs d'observations
+
+\textbf{Régularisation} = certains $W$ + probables que d'autres, privilégier petits coeffs (modèles simples), régularisateur = $\ln p(W) = - \sum_k w_k^2$ si $w_i$ gaussiens
+
+\subsection*{Logistic regression}
+
+2 classes $c_1=1, c_2=-1$
+
+$P(Y=y_i|X,W) = 1/(1+e^{-y_iWX_i})$
+
+% =========================================
+
+\section*{Apprentissage non-paramétrique}
+
+%Idée : modèle sv trop complexe pour paramétrique, diviser pour mieux régner i) séparer par classif. ii) modèles paramétriques pour sous-ensembles
+
+2 types : arbres (ID3, C4.5) et combinaison pondérée (boosting)
+
+\subsection*{Modèles logiques disjonctifs}
+
+%Modèles conjonctifs impossibles donc extension pour trouver hypothèse $h$ d'appartenance
+
+\textbf{Classifications disjonctives} ou \textbf{listes de décisions} ($h$ générale puis exclusions)
+
+
+\subsection*{Arbres de décision - ID3}
+
+Arbre = \textbf{décomposition disjonctive} du sample space (disjonction des feuilles)
+
+\textbf{Noeud} = prédicat $P(X_i)$ détermine G/D, noeuds terminaux = classe, noeud init = racine arbre
+
+\textbf{ID3} = $k$ classes, arbre optimal = profondeur moy. minimale, utilise tous les samples en mm temps, incrémental
+
+\textbf{Incertitude classe de $X_i$ étant donné $A(X)=a_j$} : $H(C|a_j) = -\sum_{i=1}^k p(c_i|a_j) \log_2 p(c_i|a_j)$
+
+\textbf{Incertitude moyenne classe($X_i$)} : $H(C|A) = \sum_{j=1}^m p(a_j) H(C|a_j)$
+
+Choisir attribut A avec la plus petite entropie $H(C|A)$
+
+
+\textbf{Valeurs multiples} : entropie privilégie attribs avec bcp valeurs, on peut choisir A qui maximise $(H(C)-H(C|A))/|\text{valeurs}(A)|$
+
+\textbf{Régression} : entropie aussi, préd. moyenne, stopper algo quand vals unifs
+
+\textbf{Extensions} : élaguer arbre, transfo règles
+
+
+
+\subsection*{Overfitting}
+
+\textbf{Critère PAC} : probablement (proba $\delta$ incorrect) approximativement (proba classif. err. $\epsilon$) correct. Avec $N$ exemples, $|H|$ possibilités et pas de training errors
+
+\textbf{Estimer quantité} : $N \geq \log(\delta/|H|)/\log(1-\epsilon)$ garantit borne $\delta$
+
+\textbf{Elaguer arbre} : utiliser validation set, PAC pour critère
+
+\textbf{Random Forest} : décision majoritaire
+
+
+\subsection*{Transformation en règles}
+
+Règle pour chaque feuille, puis simplifier (1 règle à la fois, 1 prédicat à la fois puis évaluer, tolérer erreurs)
+
+
+
+\subsection*{Boosting}
+
+Combiner modèles faibles par vote pondéré
+
+\textbf{Méthode induction faible} : erreur < 50\%, entrée = samples avec distrib probas; retourne : classificateur $h_t = 0 \text{ ou } 1$, erreur $\epsilon = \sum_{i=1}^n p_i I_{\{h(x_i)\neq c_i\}} < 0.5$
+
+\textbf{AdaBoost} : $n$ samples à poids $w_i$ ; initialiser $w_i \leftarrow 1/n$ ;  $\forall$ itération $t$ : i) normaliser $p_i \leftarrow w_i/\sum_{i=1}^nw_i$ ii) $h_t, \epsilon$ iii) $\beta_t \leftarrow \epsilon/(1-\epsilon)$ iv) $w_i\leftarrow w_i \beta_i^{I{\{h(x_i)=c_i\}}}$
+
+$h_f(x_i) = 1 \text{ si } \sum_{t=1}^k \log(1/\beta_t)(h_t(x) - \sfrac{1}{2}) \geq 0$, 0 sinon
+
+\textbf{Martingale boosting} : prochain classif. dépend des résultats des classif. précédents
+

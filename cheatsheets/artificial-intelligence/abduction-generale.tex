@@ -1,0 +1,23 @@
+\section*{Abduction}
+
+Non-monotonicité : cause trouvée invalide autres candidats
+
+Abduction valable sous hyp. monde clos
+
+\section*{Recherche}
+
+S'applique à tous cas d'abduction (mais autres aussi)
+
+Formalisation: noeuds, fun successeur, critère succès, illustré par graphe de recherche
+
+\textbf{Sans couts} : DFS, BFS, iterative deepening, si cycles $\rightarrow$ historique
+
+\subsection*{Recherche avec couts}
+
+pour $n' = succ(n)$, cout du noeud $g(n') = c(n, n') + g(n)$
+
+\textbf{Branch-and-bound}: DFS en explorant seulement les noeuds $n$ t.q. $g(n) <$ cout de solution trouvée
+
+\textbf{A*} : ordonner $Q$ par valeur de $f(n) = h(n) + g(n)$, limitation: mémoire, taille $Q$
+
+\textbf{Fun heuristique} : $h(n)$ cout min jusqu'à sol. Optimalité garantie si $h$ ne sur-estime pas . Si $h(n) = 0, g(n) = L_{chemin} \rightarrow$ BFS, $h(n) = \text{ordre ds succ(n)}, g(n) = 0$

@@ -1,0 +1,371 @@
+\section{Signaux fondamentaux}
+
+\textbf{Saut indiciel} : 
+
+$
+u(t) = 
+\begin{cases}
+0 & t < 0 \\
+1/2 & t = 0 \\
+1 & t > 0
+\end{cases}
+\quad
+u(\alpha t) = u(t) \: \forall a \in \mathbb{R}
+$
+
+\textbf{Signal rectangulaire} : 
+
+$
+rect(t) = u(t + 1/2) - u(t-1/2)\\
+rect(-t) = rect(t)
+$
+
+\textbf{Impulsion $\delta$ de Dirac} : \\
+$
+\forall f \in \mathcal{C}^0 (\mathbb{R}), 
+\quad 
+\int_\mathbb{R} f(t) \delta(t) dt = f(0) = \langle f, \delta \rangle
+$
+
+\textbf{Propriétés Delta de Dirac} : 
+\begin{itemize}
+    \item $f(t) * \delta(t-t_0) = f(t_0)$
+    \item $f(t) \cdot \delta(t-t_0) = f(t_0) \delta(t-t_0)$
+    \item $\frac{du(t)}{dt} = \delta(t)$ au sens des distributions
+    \item $\delta(-t) = \delta(t)$
+    \item $\delta'(t) * f(t) = \delta(t) * f'(t)$
+\end{itemize}
+
+% ======================================================
+
+\section{Systèmes Linéaires Invariants par Translation}
+
+Linéaire Invariant par Translation = LIT
+
+\textbf{Déf} : $S\{x\}(t) = y(t) \rightarrow S\{x(\cdot - \tau) \}(t) = y(t - \tau)$
+
+\textbf{Conséquence} : $y = h * x$
+
+\textbf{Causalité (déf)} : $h(t) = 0 \: \forall t < 0$\\
+Corollaire : $x(t) = 0 \: \forall t < t_0 \rightarrow y(t) = 0 \: \forall t < t_0$
+
+\textbf{RIF (déf)} : réponse impulsionelle finie, $\text{Supp}(h) \neq \infty$, la convolution de 2 systèmes RIF est RIF
+
+\textbf{Support (déf)} : intervalle minimal en dehors duquel le signal est 0.
+
+\textbf{Composition de sys LIT} : 
+\begin{itemize}
+    \item En série $h(t) = (h_1 * \dots * h_n)(t)$
+    \item En parallèle $h(t) = \sum_i a_i h_i(t)$
+\end{itemize}
+
+\textbf{Réponse à excitation sinusoïdale} : \\
+$x(t) = A \cos(\omega_0 t + \Theta)  \\
+\rightarrow y(t) = A \cdot A_H(\omega) \cos(\omega_0 t + \Theta + \Phi_H(\omega_0))$
+
+\textbf{Réponse à excitation périodique} : \\
+$d_n = c_n H(n\omega_0)$, $c_n$ coeff de $x_g$ % TODO : explain x_g
+
+\textbf{Exemple} : convolution de deux exponentielles est une somme pondérée des exponentielles (cf formulaire)
+
+
+% ================================================
+
+\section{EDO Linéaires}
+
+$
+    Q(D)\{y\} = P(D)\{x\}
+$
+
+\textbf{Fonction de green} : non unique, $\delta = Q(D)\{\varphi\}$ 
+
+\begin{align*}
+    \varphi & = Q(D)^{-1} \{\delta\} \\
+         & = \left[ c(D-s_1I)\dots(D-s-nI) \right]^{-1}\{\delta\} \\
+         & = \frac{1}{c}(\varphi_1 * \dots * \varphi_n)
+\end{align*}
+
+\subsection*{Résoudre EDO linéaire (sys LIT)}
+
+2 méthodes: i) domaine fréquentiel (voir section correspondante) ii) dans domaine temporel, en trouvant opérateurs inverses
+
+\begin{enum}
+    \item Factoriser le polynôme $Q(D)$ en $c(D-s_1I)\dots(D-s_nI)$
+    \item Utiliser formulaire pour trouver les fonctions de green $\phi_i$ correspondantes aux monomes inverses $(D-s_iI)^{-1}$
+    \item Ne pas oublier d'inverser la constante !!!
+    \item Obtenir la fonction de Green du système général $\varphi = \varphi_1 * \dots * \varphi_n$
+    \item Calculer réponse impulsionnelle du système $h = P\{\varphi\}$
+\end{enum}
+
+\subsection*{Stabilité}
+
+\textbf{Stabilité BIBO (déf)} : \\
+$|x(t)| \leq M_x < \infty \Rightarrow |y(t)| \leq M_y < \infty$
+
+\textbf{Théorème} Système $S_h$ BIBO stable $\Leftrightarrow h\in L_1 \Leftrightarrow \int_\mathbb{R} |h(t)| dt < \infty$ 
+
+
+% ==================================================
+
+\section{Produit scalaire et norme}
+
+\textbf{Norme (propriétés)}
+\begin{enum}
+    \item Linéarité
+    \item Symétrie Hermitienne $\langle f, g \rangle = \langle g, f^* \rangle$
+    \item Positivité $\norm{f}^2 = \langle f, f \rangle > 0 \quad \forall f \neq 0$
+\end{enum}
+
+\textbf{Energie signal} : $E_f([t_1,t_2]) = \norm{f}_{L_2([t_1,t_2])}^2 = \int_{t_1}^{t_2} |f(t)|^2$ \\
+$[t_1,t_2] = \mathbb{R}$ par défaut
+
+
+\subsection*{Approximation de signaux}
+
+\textbf{Comb. linéaire} : Soit $\{\phi_i\}_{1\leq i \leq n}$ famille orthonormale et soit $\tilde f = \sum_{i=1}^n a_i\phi_i$ l'approximation d'une fonction $f$
+
+\textbf{Erreur avec $f$} : $\norm{f-\tilde f}^2 = \norm{f}^2 + \norm{\tilde f}^2 - 2 \langle f,\tilde f \rangle$
+
+avec 
+\begin{myitemize}
+    \item Si famille orthonormale seulement  ???? : $\norm{f}^2 = \sum_{i=1}^n |a_n|^2$ 
+    \item $\langle f,\tilde f \rangle = \sum_{i=1}^n a_i \langle \phi_i, \tilde f \rangle$
+\end{myitemize}
+
+
+% ==================================================
+
+\section{Comparaison de signaux}
+
+\textbf{Intercorrélation} : $$c_{xy}(\tau) = \int_\mathbb{R} x(t) y^*(t+\tau) dt = (x^\vee * y^*)(\tau) = c_{yx}^*(-\tau)$$
+
+\textbf{Inégalité Cauchy-Schwartz} : $|\langle f,g \rangle| \geq \norm{f}\cdot\norm{g}$
+
+
+% ==================================================
+
+\section{Approximation de signaux}
+
+$\{\phi_1, \dots, \phi_n\} \text{ orthonormal} \Leftrightarrow \langle \phi_m, \phi_n \rangle_{L_2([0, T])} = \delta_{m-n} = 
+\begin{cases}
+1 & m = n \\
+0 & m \neq n
+\end{cases}
+$
+
+\textbf{Approximation des moindres carrés} : $x\in \mathcal{H}, \: \{\phi_1, \dots, \phi_n\} \text{ orthonormal} \rightarrow \tilde x = x_N = \sum_{i=1}^N \langle x, \phi_i \rangle = \sum_{i=1}^N a_i \phi_i$
+
+\textbf{Erreur} : $\norm{x-x_N}^2 = \norm{x}^2 - \norm{x_N}^2$, $\norm{x_N} = \sum |a_i|^2$
+
+
+% ==================================================
+
+
+\section{Séries de Fourier}
+
+\begin{myitemize}
+
+\item Une fonction périodique $x_T$ est complètement décrite par son spectre discret $a_0, 2a_n, 2b_n$
+
+\item Spectre décomposable en $x_T = x_{\text{pair}} + x_{\text{impair}}$
+
+\item $\{1, \sqrt{2}\cos(n\omega_0 t), \sqrt{2}\sin(n\omega_0 t)\}_{n\in\mathbb{N}^*}$ est une base orthonormale de $L_2([-\frac{T}{2},\frac{T}{2}])$
+
+\item Orthogonalité sin-cos : \\
+$\begin{cases}
+2\langle \cos(\omega_0nt), \sin(\omega_0nt) \rangle_{L_2([-T/2,T/2])} = 0 \\
+2\langle \cos(\omega_0nt), \cos(\omega_0nt) \rangle_{L_2([-T/2,T/2])} = \delta_{m-n} \\
+2\langle \sin(\omega_0nt), \sin(\omega_0nt) \rangle_{L_2([-T/2,T/2])} = \delta_{m-n}
+\end{cases}$
+
+\item Série complexe : $x_T = \sum c_n e^{jn\omega_0t}$
+
+\item Relations Euler : 
+$\begin{cases}
+e^{j\theta} = \cos\theta + j\sin\theta \\
+\cos\theta = (e^{j\theta} + e^{-j\theta})\\
+\sin\theta = (e^{j\theta} - e^{-j\theta})
+\end{cases}$
+
+\item Interprétation : 
+\begin{myitemize}
+\item Variations lentes $\rightarrow$ spectre décroit rapidement
+\item Signal réel : $c_n = c_{-n}^* = a_n - jb_n$
+\item Réel + pair : $c_n=a_n$
+\item Réel + impair : $c_n=-jb_n$
+\end{myitemize}
+
+\end{myitemize}
+
+
+% ==================================================
+
+\section{Espace de Hilbert}
+$
+\mathcal{H}_T = \{ x(t) \:|\: x(t) \in \mathbb{C}, \int_{-T/2}^{T/2} |x(t)|^2dt < \infty, \\
+ x(t) = 0 \: \forall |t| > T/2 \}
+$
+
+\begin{myitemize}
+
+\item Espace des signaux à durée et énergie finie sur période $T$
+
+\item $\langle x,y \rangle_{L_2(\mathcal{H_T})} = \frac{1}{T} \int_{-T/2}^{T/2} x(t)y^*(t)dt$
+
+\item $\{e^{jn\omega_0 t}\}_{n\in\mathbb{Z}}$ base orthonormale de $\mathcal{H}_T$
+
+\item $\forall x \in \mathcal{H}$, $\sum |\langle x, \phi_n \rangle|^2 = \sum |c_n|^2 \leq \norm{x}^2$ (inégalité de Bessel)
+
+\item \textbf{Parceval} : $\sum |\langle x, \phi_n \rangle|^2 = \sum |c_n|^n = \norm{x}^2 = \langle x,x \rangle$ (au sens de $L_2([-T/2,T/2])$
+
+\end{myitemize}
+
+% ==================================================
+
+\section{Transformation de Fourier}
+
+$X(\omega) = R_x(\omega) + jI_x(\omega) = A_x(\omega) e^{j\Phi(\omega)}$
+
+Convergence uniforme si $x$ continue et $X(\omega) \in L_1$
+
+TABLEAU DES COEFFs
+
+Si $x$ réel, $x(t) = x^*(t) \fourierarrow X(\omega) = X^*(-\omega)$
+
+\textbf{Parceval} : $\forall \phi \in \mathcal{S}, \langle \phi,x \rangle_{L_2(\mathbb{R})} = \frac{1}{2\pi} \langle \Phi, X \rangle, x \in L_1$
+
+\textbf{Au sens des distributions} : pas dans $L_1$, $\text{sign}, u$
+
+
+% ==================================================
+
+\section{Séries et périodisation}
+\begin{myitemize}
+
+\item \textbf{Train impulsion Dirac} : $s_{T_0} = \sum \delta(t - kT), \omega_0 = 2\pi / T$
+
+\item $x_p = \sum c_n e^{jn\omega_0 t} \fourierarrow 2\pi \sum c_n \delta(\omega - n\omega_0)$, spectre de raies
+
+\item \textbf{Périodisation, synthèse} : $x_p = x * s_{T_0}$
+
+\item \textbf{Parceval périodique} $\langle x_T,y_T \rangle_{L_2([0,T])} = \sum c_n d_n^*$, en particulier $\norm{x_T}^2 = \sum |c_n|^2$
+
+\item \textbf{Parceval non-périod} $\forall x,y \in L_2, \langle x,y \rangle_{L_2} = \frac{1}{2\pi}\langle X, Y \rangle_{L_2} $, en particulier $\norm{x}^2 = \frac{1}{2\pi} \norm{X}^2 = E_{x,\text{tot}}$
+
+à utiliser comme \textbf{tip\&trick} pour calculer énergie
+
+\end{myitemize}
+
+% ==================================================
+
+\section{Densité spectrale}
+
+$c_{xx} \fourierarrow |X(-\omega)|^2 = C_{xx}(\omega)$
+
+Spectre d'intercorrélation : $c_{xy} = x^\vee * y^* \fourierarrow C_{xy}(\omega) = X(-\omega) Y^*(-\omega)$
+
+
+% ==================================================
+
+\section{Fenêtres de pondération}
+
+Troncation Fourier et pondération $x_N'(t) = \sum w_n c_n e^{jn\omega_0t}$, choix des $w_n$, erreur $\norm{e}^2 = \sum_{|n| \leq N} |c_n - c_nw_n| + \sum_{|n| > N} |c_n|^2$
+
+Fonctions fenêtres : troncation fréquentielle = filtrage, décroissance lobes secondaires : + rapide si fenêtre continue
+
+
+% ==================================================
+
+\section{Echantillonnage}
+
+Echant. idéal d'un signal analogique : $x_e(t) = x(t) \cdot s_{T_e}(t)$
+
+$\Rightarrow X_e$ périodique, $\omega_e = 2\pi/T_e$, $X_e(\omega) = \sum x(nT_e) e^{-j\omega_n T_e} = 1/T_e \sum X(\omega - 2\pi n / T_e)$  
+
+\textbf{Théorème de Shanon} : $x$ à bande limitée avex $\omega_{max}$ est complètement déterminé par ses échantillons si $\omega_{ech} \geq 2\omega_{max}$ (reconstruction avec filtre rect idéal)
+
+\textbf{Reconstruction} $x(t) = x_e * \sinc(t/T_e)$ puis lissage
+
+
+% ==================================================
+
+\section{Modulation}
+
+\subsection*{Amplitude modulation (AM)}
+Amplitude modulée dans le temps, $x_{AM}(t = x(t) A_p \cos(\omega_pt)$, avec $x$ bande limitée $B$, ($|X(\omega)|=0 \: \forall |\omega| > B$) avec $\omega_p \gg B$ pour éviter recouvrement + si filtre non idéal
+
+$x_{AM} \fourierarrow \frac{A_p}{2} \left( X(\omega+\omega_p) + X(\omega-\omega_p) \right)$
+
+\textbf{Démodulation AM} : $x_{AM}(t) \cdot p'(t), p'(t) = 2\cos(\omega_p t = x(t)(1+\cos(2\omega_pt))$
+
+$\Rightarrow$ multiplexage fréquentiel
+
+\subsection*{Modulation d'angle}
+$x_m(t) = A_p \cos\theta(t)$, $\theta(t) = \omega_pt + \lambda_p (h*x)(t)$
+
+$(h*x)(t) = y(t)$
+
+\textbf{Fréquence instantanée} : $\omega_i(t) = \dot \theta(t)$
+
+\textbf{PM} : $h=\delta$, $\theta_{PM}(t) = \omega_pt + \lambda_p x(t)$
+
+\textbf{FM} : $h=u$, $\theta_{RM}(t) = \omega_pt + \lambda_p \int_{-\infty}^t x(\tau)d\tau$
+
+\textbf{Largeur de bande FM} : $\infty$, mais calcul de $B_{ess}$ (essentielle) :  $B_{FM} = B_{AM} + 2 \frac{\lambda_p x_{max}}{2\pi}$, $B_{PM} = B_{AM} + 2 \frac{\lambda_p \dot x_{max}}{2\pi}$, $\mathbf{B_{AM}} = ??????$
+
+
+% ==================================================
+
+\section{Largeur de bande essentielle}
+
+\textbf{Energie totale} : Parceval $E_{tot} = \norm{x}^2 = \frac{1}{2\pi} \norm{X}^2$
+
+\textbf{Densité spectrale d'énergie} : $\frac{1}{2\pi} |X(\omega)|^2$
+
+Pour $x$ réel, $E_{[\omega_1,\omega_2]} = \frac{1}{\pi} \int_{\omega_1}^{\omega_2} |X(\omega)|^2 d\omega$
+
+Pour $x$ réel, $\frac{1}{2\pi} |X(\omega)|^2 = \frac{1}{2\pi} C_{xx}(\omega)$
+
+
+% ==================================================
+
+\section{Moments et localisation}
+
+$m_f^n = \int_\mathbb{R} t^n f(t)dt = j^n \frac{d^nF(\omega)}{d\omega^n} \rvert_{\omega=0}$
+
+% Ouch, such a bad notation 
+Pour $f \sim \mathcal{N}(m, \sigma^2) \rightarrow \mu_f^{(0)} = 1, \mu_f^{(1)} = m, \mu_f^{(2)} = m^2+\sigma^2$
+
+
+% ==================================================
+
+\section{$\beta$-splines}
+
+
+% ==================================================
+
+\section{Fonction de transfert rationelles}
+
+Contrainte physique $n \geq m$
+
+$$\frac{d^ny}{dt^n} + a_{n-1}\frac{d^{n-1}y}{dt^{n-1}} + \dots + a_0 y = b_m \frac{d^mx}{dt^m} + \dots + b_0 x$$
+
+Fonction de transfer $H(j\omega) = \frac{P_m(j\omega)}{Q_n(j\omega)}$
+
+$P_m(s) = b_ms^m+\dots+b_1s+b_0$, \\
+$Q_n(s) = s^n+a_{n-1}s^{n-1}+\dots+a_0$
+
+\textbf{BIBO-stable} : tous les pôles de $Q_n$ sont t.q. $\text{Re}(s) < 0$
+
+\textbf{Get $h$ from $H$} : $h(t) = b_n \delta(t) + \sum A_k u(t) e^{s_p k t}$, décomposition en éléments simples
+
+\begin{enum}
+    \item Poser $s=j\omega$ et $H(s)Q(s) = P(s)$
+    \item Résoudre en posant $s = \dots$ (les poles)
+    \item Utiliser les conjugués complexe !! Economie temps
+\end{enum}
+
+\textbf{Filtre réel} $\leftrightarrow$ symétrie horizontale pôles et zéros 
+
+
+\textbf{Filtre à phase min} G t.q. $|G(\omega)| = |H(\omega)|$, $G^{-1}$ stable causal ; donc prendre $H$ mais avec les zéros $\text{Re}(s) < 0$, si pas cas, symétrie verticle d'axe y

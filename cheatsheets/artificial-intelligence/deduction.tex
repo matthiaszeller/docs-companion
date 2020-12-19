@@ -1,0 +1,54 @@
+\section*{Déduction}
+
+Sans var : ordre 0, avec : ordre 1.
+
+\subsection*{Moteur d'inférence}
+
+Trouve des $q$ à partir de $\{P\}$ t.q. $\{P\} \vdash q$, central pour sys à base de connaissance. \emph{Fondé} si $q$ tjs conséquence de $\{P\}$, \emph{Complet} si trouve tous les $q$. Gödel: aucun algo fondé et complet. 
+
+Inférence par \emph{résolution} $\rightarrow$ complète pour réfutation: $\left( \{P\} \cup \lnot q \right) \vdash \bot$.
+
+\subsection*{Inférence sans variables}
+
+Transformation en forme normale conjonctive puis recherche itérative de solution. 2 méthodes, inférence par :
+
+\textbf{Résolution} : (+) général, (-) couteux
+
+\textbf{Chainage} : (+) rapide, (-) limité à clauses Horn (résolution devient modus ponens)
+
+
+\subsection*{Inférence avec variables}
+
+Quantif des symboles $\rightarrow$ exprime connaissances générales, args de prédicats peuvent être des vars (quantifiées!)
+
+\textbf{Fonction Skolem} : $f(x)$ renvoie tjs un $y$ qui remplit condition $p(x,y)$:\\
+$(\forall x)(\exists y) p(x,y) \rightarrow (\forall x) p(x, f(x))$
+
+Forme normale = élim. $\exists$ avec Skolem, omettre les $\forall$ restants
+
+Résolution avec vars : unification, substitutions pour égaliser expressions, utilise règles résolution binaire et factorisation
+
+\textbf{Filtrage} : pattern matching, pattern avec vars, datum sans. Unif comme filtrage mais 2 expr avec var
+
+
+\subsection*{Chaînage}
+
+Application en chaine d'inférences:\\
+$P_1 \stackrel{R_1}{\Rightarrow} P_2 \stackrel{R_2}{\Rightarrow} \dots \stackrel{R_n}{\Rightarrow} solution$
+
+Limite connaissances en règles (clause Horn) et faits (prop. simples)
+
+\textbf{Avant} : recherche aveugle, liste attente (évite boucles), but = conjonction prop. positives ($\lnot q$ clause Horn), applique modus ponens à $\{P\}\cup \lnot q$ pour produire $q$ $\rightarrow \bot$ ; propriétés : déclanche règle seulement si $q$ ajouté à BD, \# faits fini $\rightarrow$ arrêt garanti, temps $O(n_{regles})$
+
+\textbf{Arrière} : partir des sol, étapes intermed. hypoth., applic. règle donne nvx sous-buts, distinguer environnements, Q to user: entrer prémisses au fur et à mesure (A* pour minimis. cout) 
+
+Lequel ? Arrière: planification, diagnostic. Avant: 
+
+Hybride : intégrer chainage avant dans arrière ok (inverse pas poss, incompatiblité envir. distincts)
+
+%\subsection*{TRAITEMENT NEGATION}
+
+
+\subsection*{Systèmes experts}
+
+Défi : complexité, recherche inefficace, analyse moyens-buts = heuristique, se traduit par chainage arrière 

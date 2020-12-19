@@ -1,0 +1,31 @@
+\section*{Non supervisé - Clustering}
+
+
+\section*{Clustering}
+
+Apprentissage de sous-classes ($k$ aggégats), critère homogénéité
+
+Base : mesure de distance/similarité
+
+Basé sur recherche mais complexité $k^n$ donc approx
+
+\subsection*{Clustering hiérarchique}
+
+Créer un dendrogramme qu'on coupe à un endroit
+
+\textbf{Par agglomération} : bottom-up, types similarité : transitive (ex single-link = min des paires de dist) et non transitive (ex complete-link = max)
+
+\textbf{Par division} : top-down, graphe similarité, noeud = sample, arc pondérés par dist ; découper arcs de forte similarité $\rightarrow$ graphes connexes, similarité transitive ; pas ouf (pas équilibré en taille)
+
+\textbf{Clustering spectral exact} : %minimiser critère NCut: $(\sum_{a\in cut} w(a))(1/\sum_{a\in C_1} w(a) + 1/\sum_{a\in C_2} w(a))$
+
+\textbf{Clustering spectral approx} : matrice W poids arcs, matrice diag D poids arcs indidents aux samples, construire Laplacien $L = I - D^{-1}W$, vec propre associé à 2e + petite val propre : signe composantes indique classe
+
+
+\subsection*{Clustering de partitionnement}
+
+\textbf{K-médoïdes} : (K-means uniqu. attrib. continus) init. choisir $k$ noyaux, itérativement i) associer $x_i$ au noyau + proche ii) update noyaux (exemple le + central) ; drawbacks : init. random, k dur à choisir, convergence non garantie, similarité non-transitive ; (+) : rapide, attrib. discrets aussi
+
+\textbf{Clustering probabiliste} : clustering flou, paramétrisation de distributions et estimation des params  ; algo \textbf{expectation maximization}
+
+
