@@ -10,7 +10,22 @@ overleaf-github bridge, in order to **centralize and backup** latex templates.
 
 ## Project structure
 
-### Description
+
+### Bridge principles
+
+* 1 GitHub repo linked with 1 Overleaf project
+* Default view: README.md and main.tex
+* File browser in both interfaces
+
+#### Add templates to this repo
+
+From Overleaf perspective, it is currently not possible to 
+include all files of an external project (only a single file at a time can 
+be uploaded). Best solution I found so far: download `.zip` files of 
+projects from Overleaf, and unzip them in corresponding category.
+
+
+### File structure
 
 * Directory tree level 1 (i.e. root) : 
   * Name of template categories (e.g. cheatsheets)
@@ -19,7 +34,7 @@ overleaf-github bridge, in order to **centralize and backup** latex templates.
 * Directory tree level 2  : 
   * specific example projects / templates 
 
-### Treeview of template structure
+#### Treeview of template structure
 
 ```
 .
@@ -40,3 +55,18 @@ overleaf-github bridge, in order to **centralize and backup** latex templates.
     └── topic1
         └── ...
 ```
+
+## To-have-on-hand commands 
+
+### Generate PDF vignette for example projects READMEs
+
+* PDF to SVG:
+  ```bash
+  $ inkscape --without-gui --file=input.pdf --export-plain-svg=output.svg
+  ```
+
+
+
+
+<!-- Add HTML break lines to improve markdown real-time visualization in PyCharm  -->
+<br /><br /><br /><br /><br /> 
