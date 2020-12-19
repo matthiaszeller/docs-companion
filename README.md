@@ -4,9 +4,7 @@
 
 ## Motivation 
 
-[Overleaf website](https://www.overleaf.com/) (cloud-based LaTeX editor) recently added a feature to classify projects by named and colored categories.
-Until now, overleaf projects accumulated without well-defined structure. This new feature gave me the idea to create an 
-overleaf-github bridge, in order to **centralize and backup** latex templates. 
+After accumulating few projects in [Overleaf](https://www.overleaf.com/) (cloud-based LaTeX editor), I felt the need to centralize and backup documents / templates. Creating this repository, a [bridge](https://www.overleaf.com/learn/how-to/Using_Git_and_GitHub) between Overleaf and Github, provides an Overleaf entry point to easily perform a few tests and create new projects based on existing ones, while enjoying the version control of git.
 
 ## Example templates
 
@@ -24,8 +22,7 @@ overleaf-github bridge, in order to **centralize and backup** latex templates.
 ### Bridge principles
 
 * 1 GitHub repo linked with 1 Overleaf project
-* Default view: README.md and main.tex
-* File browser in both interfaces
+* Default view: README.md (GitHub) and main.tex (Overleaf)
 
 #### Add templates to this repo
 
